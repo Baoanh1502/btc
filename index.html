@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Trade Bot</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <div class="left-panel full">
+      <h2>Lưu Động Thị Trường</h2>
+      <div id="aiStatus">AI đang phân tích...</div>
+      <div id="countdown">30s</div>
+      <div id="decision" class="hidden">
+        <img id="directionIcon" src="" alt="AI Decision" />
+        <div id="ratio">Ratio: 93%</div>
+        <div id="phase">Phiên: Đặt lệnh</div>
+        <div id="orderBtns">
+          <button class="buy">MUA</button>
+          <button class="sell">BÁN</button>
+        </div>
+      </div>
+      <canvas id="btcChart" width="600" height="300"></canvas>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

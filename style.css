@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #121212;
+  color: #fff;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+}
+.left-panel.full {
+  background: #1e1e1e;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+}
+#countdown {
+  font-size: 2em;
+  margin: 10px 0;
+  color: #00ffcc;
+}
+#decision {
+  margin-top: 20px;
+}
+#decision img {
+  width: 100px;
+  height: auto;
+}
+.buy, .sell {
+  font-size: 1.2em;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  margin: 10px;
+  cursor: pointer;
+}
+.buy {
+  background-color: #00cc66;
+  color: white;
+}
+.sell {
+  background-color: #ff3333;
+  color: white;
+}
+.hidden {
+  display: none;
+}
+canvas {
+  margin-top: 20px;
+  background: #ffffff08;
+  border-radius: 10px;
+}
