@@ -1,0 +1,120 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Dự Đoán BTC</title>
+  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: #111;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .container {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 10px;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 10px #00f2ff44;
+      text-align: center;
+    }
+    h1 { margin-bottom: 10px; }
+    #countdown {
+      font-size: 28px;
+      color: #00ff99;
+      margin: 10px 0;
+    }
+    #result {
+      font-size: 26px;
+      font-weight: bold;
+    }
+    .buy { color: #00e676; }
+    .sell { color: #ff5252; }
+    #chart {
+      width: 100%;
+      height: 300px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AI Dự Đoán BTC</h1>
+    <div id="countdown">Đang phân tích: 30s</div>
+    <div id="result">Đang phân tích...</div>
+    <div id="chart"></div>
+  </div>
+
+  <script>
+    let time = 30;
+    const countdownEl = document.getElementById("countdown");
+    const resultEl = document.getElementById("result");
+
+    function reset() {
+      time = 30;
+      resultEl.innerHTML = "Đang phân tích...";
+    }
+
+    function updateCountdown() {
+      countdownEl.textContent = `Đang phân tích: ${time}s`;
+      time--;
+      if (time < 0) {
+        const isBuy = Math.random() > 0.5;
+        const ratio = Math.floor(Math.random() * 10) + 90;
+        resultEl.innerHTML = `Tỉ lệ: ${ratio}%<br>Khuyến nghị: <span class="${isBuy ? 'buy' : 'sell'}">${isBuy ? 'MUA' : 'BÁN'}</span>`;
+        clearInterval(timer);
+        setTimeout(() => {
+          reset();
+          startCycle();
+        }, 10000);
+      }
+    }
+
+    function startCycle() {
+      updateCountdown();
+      timer = setInterval(updateCountdown, 1000);
+    }
+
+    let timer;
+    startCycle();
+
+    // Chart setup
+    const chart = LightweightCharts.createChart(document.getElementById("chart"), {
+      layout: { background: { color: "#1e1e1e" }, textColor: "#ccc" },
+      grid: { vertLines: { color: "#333" }, horzLines: { color: "#333" } },
+      timeScale: { timeVisible: true, secondsVisible: true },
+    });
+    const candleSeries = chart.addCandlestickSeries();
+
+    // Fake data
+    let t = Math.floor(Date.now() / 1000);
+    function randCandle() {
+      let o = 10600 + Math.random() * 100;
+      let c = o + (Math.random() - 0.5) * 80;
+      let h = Math.max(o, c) + Math.random() * 20;
+      let l = Math.min(o, c) - Math.random() * 20;
+      return { time: t++, open: o, high: h, low: l, close: c };
+    }
+
+    let data = [];
+    for (let i = 0; i < 30; i++) data.push(randCandle());
+    candleSeries.setData(data);
+
+    setInterval(() => {
+      const newCandle = randCandle();
+      data.push(newCandle);
+      if (data.length > 100) data.shift();
+      candleSeries.update(newCandle);
+    }, 3000);
+  </script>
+</body>
+</html>
