@@ -1,0 +1,92 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Dự Đoán Thị Trường BTC</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-financial"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Roboto', sans-serif;
+      background: #111;
+      color: #eee;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+    .card {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 16px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+      width: 95%;
+      max-width: 500px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 10px;
+      color: #00ffc6;
+    }
+    #countdown {
+      font-size: 32px;
+      color: #00ffc6;
+      text-align: center;
+    }
+    #adviceText {
+      font-size: 18px;
+      margin: 10px 0;
+      text-align: center;
+    }
+    #ratio {
+      text-align: center;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+    #orderBtns {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+    }
+    button {
+      padding: 12px 24px;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
+    }
+    .buy {
+      background: #00ff88;
+      color: #000;
+    }
+    .sell {
+      background: #ff3e3e;
+      color: #fff;
+    }
+    canvas {
+      margin-top: 20px;
+      background: #222;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>Lưu Động Thị Trường</h2>
+    <div id="aiStatus">AI đang phân tích...</div>
+    <div id="countdown">30s</div>
+    <div id="ratio">Ratio: --</div>
+    <div id="adviceText">Đang phân tích...</div>
+    <div id="orderBtns"></div>
+    <canvas id="btcChart" width="400" height="200"></canvas>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
