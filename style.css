@@ -1,0 +1,57 @@
+/* Light / Dark theme setup */
+body.light {
+  background-color: #f0f2f5;
+  color: #111;
+}
+body.dark {
+  background: radial-gradient(circle, #0f2027, #203a43, #2c5364);
+  color: #fff;
+}
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2em;
+  margin-bottom: 30px;
+  color: #58a6ff;
+}
+
+canvas {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  margin-bottom: 30px;
+  box-shadow: 0 0 12px rgba(0,0,0,0.3);
+}
+
+.info p {
+  font-size: 1.3em;
+  margin: 8px 0;
+}
+
+.note {
+  margin-top: 30px;
+  font-size: 0.95em;
+  color: #ccc;
+}
+
+/* Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+}
+.delay-1 { animation-delay: 0.2s; }
+.delay-2 { animation-delay: 0.4s; }
+.delay-3 { animation-delay: 0.6s; }
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

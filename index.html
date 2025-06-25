@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Bot Dự Đoán BTC</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container fade-in">
+    <h1>📊 Bot Dự Đoán Thị Trường BTC</h1>
+    <canvas id="btcChart" width="600" height="300" class="fade-in delay-1"></canvas>
+
+    <div class="info fade-in delay-2">
+      <p id="price">💰 Giá BTC: ...</p>
+      <p id="trend">📈 Xu hướng: ...</p>
+      <p id="advice">📌 Khuyến nghị: ...</p>
+    </div>
+
+    <p class="note fade-in delay-3">⏱️ Bot cập nhật mỗi 30 giây – giao diện sáng/tối tự động</p>
+  </div>
+
+  <!-- Dùng Chart.js online -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
