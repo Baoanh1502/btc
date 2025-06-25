@@ -1,0 +1,127 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI Dự Đoán BTC - CoinEx</title>
+  <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+  <style>
+    body {
+      margin: 0;
+      background: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .container {
+      background: #1e1e1e;
+      padding: 20px;
+      border-radius: 12px;
+      width: 95%;
+      max-width: 600px;
+      text-align: center;
+      box-shadow: 0 0 10px #00f2ff44;
+    }
+    h1 {
+      margin-bottom: 10px;
+    }
+    #countdown {
+      font-size: 24px;
+      color: #0f0;
+      margin: 10px 0;
+    }
+    #result {
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .buy { color: #00e676; }
+    .sell { color: #ff5252; }
+    #chart {
+      width: 100%;
+      height: 300px;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AI Dự Đoán BTC (CoinEx)</h1>
+    <div id="countdown">Đang phân tích: 30s</div>
+    <div id="result">Đang phân tích...</div>
+    <div id="chart"></div>
+  </div>
+
+  <script>
+    let time = 30;
+    let priceData = [];
+    let timer;
+
+    const countdownEl = document.getElementById("countdown");
+    const resultEl = document.getElementById("result");
+
+    const chart = LightweightCharts.createChart(document.getElementById("chart"), {
+      layout: { background: { color: "#1e1e1e" }, textColor: "#ccc" },
+      grid: { vertLines: { color: "#333" }, horzLines: { color: "#333" } },
+      timeScale: { timeVisible: true, secondsVisible: true },
+    });
+    const candleSeries = chart.addCandlestickSeries();
+
+    async function fetchData() {
+      try {
+        const res = await fetch("https://api.allorigins.win/raw?url=https://api.coinex.com/v2/spot/kline?market=BTCUSDT&period=1min&limit=50");
+        const json = await res.json();
+        const raw = json.data.klines;
+        priceData = raw.map(d => ({
+          time: Math.floor(d[0]),
+          open: parseFloat(d[1]),
+          high: parseFloat(d[2]),
+          low: parseFloat(d[3]),
+          close: parseFloat(d[4])
+        }));
+        candleSeries.setData(priceData);
+      } catch (e) {
+        resultEl.textContent = "Không thể tải dữ liệu từ CoinEx";
+      }
+    }
+
+    function updatePrediction() {
+      const last = priceData[priceData.length - 1];
+      const prev = priceData[priceData.length - 2];
+
+      if (!last || !prev) {
+        resultEl.innerHTML = 'Không đủ dữ liệu';
+        return;
+      }
+
+      const isBuy = last.close < prev.close;
+      resultEl.innerHTML = `Khuyến nghị: <span class="${isBuy ? 'buy' : 'sell'}">${isBuy ? 'MUA' : 'BÁN'}</span>`;
+    }
+
+    async function startCycle() {
+      time = 30;
+      resultEl.textContent = 'Đang phân tích...';
+      clearInterval(timer);
+
+      await fetchData();
+
+      timer = setInterval(() => {
+        countdownEl.textContent = `Đang phân tích: ${time}s`;
+        time--;
+
+        if (time < 0) {
+          clearInterval(timer);
+          updatePrediction();
+          setTimeout(startCycle, 10000);
+        }
+      }, 1000);
+    }
+
+    startCycle();
+  </script>
+</body>
+</html>
